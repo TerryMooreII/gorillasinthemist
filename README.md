@@ -1,1 +1,1 @@
-# gorillasinthemist.hockey
+# gorillasinthemisthockey.club
