@@ -64,7 +64,7 @@ export class AppStandings {
       return s.type === "stat-event";
     })
     .reduce((acc, se) => {
-      const { value, event_id, team_id, stat_id } = se.attributes;
+      const { value, team_id, stat_id } = se.attributes;
       if (!acc[team_id]) {
         acc[team_id] = {};
       }
