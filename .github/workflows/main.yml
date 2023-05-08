@@ -27,3 +27,5 @@ jobs:
         with:
           branch: gh-pages
           folder: www
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          
