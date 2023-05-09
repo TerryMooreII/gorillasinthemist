@@ -10,7 +10,8 @@ const twConfigurationFn = (filename: string, config: TailwindConfig): TailwindCo
       safelist: [
         'bg-red-500',
         'text-3xl',
-        'lg:text-4xl'
+        'lg:text-4xl',
+        'lg:w-1/2'
       ]
     };
   }
