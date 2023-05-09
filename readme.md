@@ -33,6 +33,11 @@ git rebase upstream/main
 git push --force
 ```
 
+When the season changes you will need to update the `TEAM_ID` and `LEAGUE_ID` [variables in github](https://github.com/TerryMooreII/fightingmoosekuckles/settings/variables/actions)
+
+To get the correct ids go to the [Polar Ice House](https://apps.daysmartrecreation.com/dash/x/#/online/polarice/leagues?location=1) (or your local league page) and look for your league.  Hover over the league level and grab the id from the url.  After you click on the league find your team name and hover over that for the team_id
+
+
 ## Getting Started
 
 To start a new project using Stencil, clone this repo to a new directory:
