@@ -7,6 +7,11 @@ import { Env } from '@stencil/core';
   shadow: true,
 })
 export class AppRoot {
+
+  componentWillLoad() {
+    document.title = Env.teamName
+  }
+
   render() {
     return (
       <div class="flex-col justify-center container p-2 mx-auto mt-8">
