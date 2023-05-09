@@ -33,7 +33,7 @@ export class AppRoot {
               </div>
             </div>
 
-            <stencil-router>
+            <stencil-router historyType={'hash'}>
               <stencil-route-switch scrollTopOffset={0}>
                 <stencil-route url="/" component="app-schedule" exact={true} />
                 <stencil-route url="/schedule" component="app-schedule"  exact={true} />
