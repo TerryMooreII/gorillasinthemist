@@ -102,7 +102,7 @@ const start = (json) => {
   const nextEvent = getNextEvent(events)
 
   const nextEventDom = !nextEvent ? '' : `
-    <div class="flex w-full flex-col items-center border-b-4 border-grey-500">
+    <div class="flex w-full flex-col items-center border-b-2 border-gray-400">
     <h4 class="text-2xl text-center w-full"> Next Game </h4>
     <div class="containter flex flex-row my-4 w-full lg:w-3/4 p-5">
       <div class="flex flex-row w-full">
@@ -133,8 +133,8 @@ const start = (json) => {
 
   const dom = events.map((event, i) => {
     return `
-    <div class="containter flex flex-row lg:py-4 lg:w-1/2 border-b w-full">
-      <div class="flex flex-row w-full py-5 ${i % 2 ? "lg:border-l" : ""}">
+    <div class="containter flex flex-row lg:py-4 lg:w-1/2 border-b border-gray-400 w-full">
+      <div class="flex flex-row w-full py-5 ${i % 2 ? "lg:border-l border-gray-400" : ""}">
         <div class="event flex flex-col w-full p-4">
           <div class="away flex items-center justify-between ${
             event.vscore > event.hscore ? "font-bold" : ""
