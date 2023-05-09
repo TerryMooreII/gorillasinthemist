@@ -1,5 +1,17 @@
 
-# A better interface for view daysmart team schedules
+# A better interface for viewing daysmart team schedules
+
+Add the following ENV variables to your `.env` file
+
+```
+TEAM_ID=
+LEAGUE_ID=
+TEAM_NAME=
+TEAM_DESCRIPTION=
+LOGO_FILE=
+BEER_RULES_MD_FILE=
+```
+
 
 ## Getting Started
 

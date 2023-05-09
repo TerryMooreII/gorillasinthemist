@@ -27,9 +27,11 @@ export class AppRoot {
                 <stencil-route-link url="/standings" class="w-32 py-2 text-lg text-center" activeClass="underline">
                   Standings              
                 </stencil-route-link>      
-                <stencil-route-link url="/rules" class="w-32 py-2 text-lg text-center" activeClass="underline">
+                { 
+                Env.teamName && <stencil-route-link url="/rules" class="w-32 py-2 text-lg text-center" activeClass="underline">
                   Beer Rules
                 </stencil-route-link>
+                }
               </div>
             </div>
 
