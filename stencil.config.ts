@@ -34,14 +34,15 @@ export const config: Config = {
       type: 'www',
       // comment the following line to disable service workers in production
       serviceWorker: null,
-      baseUrl: 'https://myapp.local/',
+      baseUrl: process.env.BASE_URL || 'https://myapp.local/',
       copy: [
-        { src: 'CNAME', dest: 'CNAME' },
+        { src: 'CNAME', dest: 'CNAME', warn: false },
         { src: '.nojekyll', dest: '.nojekyll' }
       ]
     },
   ],
   env: {
+    baseUrl: process.env.BASE_URL,
     teamId: process.env.TEAM_ID,
     leagueId: process.env.LEAGUE_ID,
     teamName: process.env.TEAM_NAME,

@@ -4,6 +4,7 @@
 Add the following ENV variables to your `.env` file
 
 ```
+BASE_URL=  #including ending slash ex http://mysite.com/
 TEAM_ID=
 LEAGUE_ID=
 TEAM_NAME=
