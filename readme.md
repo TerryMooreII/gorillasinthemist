@@ -13,6 +13,26 @@ BEER_RULES_MD_FILE=
 ```
 
 
+## How this works
+
+All shared code goes in this repo, the other actual pages get setup like below
+
+Add the following upstream to the child repos.
+
+```
+git remote add upstream git@github.com:TerryMooreII/daysmart-fe.git
+```
+
+Now to get changes from upstream in the Gorillas or Moose knuckles child team pages
+
+```
+git fetch upstream
+
+git rebase upstream/main
+
+git push --force
+```
+
 ## Getting Started
 
 To start a new project using Stencil, clone this repo to a new directory:
