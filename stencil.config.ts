@@ -41,18 +41,18 @@ export const config: Config = {
     },
   ],
   env: {
-    // teamId: '5059',
-    // leagueId: '2502',
-    // teamName: 'Gorillas in the Mist Hockey Club',
-    // teamDescription: 'Just a Bunch of Beer League Knuckledraggers',
-    // logo: 'assets/logo.svg',
-    // beerRules: '/assets/beer-rules.md'
-    teamId: '5148',
-    leagueId: '2525',
-    teamName: 'Fighting Moose Knuckles Hockey Club',
-    teamDescription: '',
+    teamId: '5059',
+    leagueId: '2502',
+    teamName: 'Gorillas in the Mist Hockey Club',
+    teamDescription: 'Just a Bunch of Beer League Knuckledraggers',
     logo: 'assets/logo.svg',
-    beerRules: '/assets/beer-rules.md',
-    beerURL: ''
+    beerRules: '/assets/beer-rules.md'
+  //   teamId: '5148',
+  //   leagueId: '2525',
+  //   teamName: 'Fighting Moose Knuckles Hockey Club',
+  //   teamDescription: '',
+  //   logo: 'assets/logo.svg',
+  //   beerRules: '/assets/beer-rules.md',
+  //   beerURL: ''
   }
 };
