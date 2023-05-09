@@ -39,7 +39,8 @@ export const config: Config = {
       serviceWorker: null,
       baseUrl: 'https://myapp.local/',
       copy: [
-        { src: 'CNAME', dest: 'CNAME' }
+        { src: 'CNAME', dest: 'CNAME' },
+        { src: '.nojekyll', dest: '.nojekyll' }
       ]
     },
   ],
