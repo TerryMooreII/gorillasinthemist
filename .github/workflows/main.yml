@@ -1,5 +1,13 @@
 name: Build and GH-Page Deploy
 
+env:
+  TEAM_ID: ${{ vars.TEAM_ID }}
+  LEAGUE_ID: ${{ vars.LEAGUE_ID }}
+  TEAM_NAME: ${{ vars.TEAM_NAME }}
+  TEAM_DESCRIPTION: ${{ vars.TEAM_DESCRIPTION }}
+  LOGO_FILE: ${{ vars.LOGO_FILE }}
+  BEER_RULES_MD_FILE: ${{ vars.BEER_RULES_MD_FILE }}
+
 on:
   push:
     branches:
