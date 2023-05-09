@@ -3,7 +3,6 @@ import tailwind, { tailwindHMR, TailwindConfig } from 'stencil-tailwind-plugin';
 import cfg from './tailwind.config';
 
 const twConfigurationFn = (filename: string, config: TailwindConfig): TailwindConfig => {
-  if (filename.includes('app-rules.tsx')) {
     return {
       ...config,
       ...cfg,
@@ -14,11 +13,6 @@ const twConfigurationFn = (filename: string, config: TailwindConfig): TailwindCo
         'lg:w-1/2'
       ]
     };
-  }
-  return {
-    ...config,
-    ...cfg
-  };
 };
 const opts = {
   tailwindConf: twConfigurationFn
