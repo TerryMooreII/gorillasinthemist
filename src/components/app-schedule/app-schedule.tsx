@@ -1,6 +1,6 @@
 import { Component, State, h } from '@stencil/core';
 import { getDayOfWeek, formatDate, formatTime } from '../../utils/date-helpers.js'
-import { getSchedule, teamid } from '../../utils/api.js'
+import { getSchedule, getBeerData, teamid } from '../../utils/api.js'
 import state from '../../stores/store.js'
 
 @Component({
@@ -10,6 +10,7 @@ import state from '../../stores/store.js'
 })
 export class AppSchedule {
   @State() events = []
+  @State() beerList = null
 
   async componentWillLoad() {
     if (state.schedule) {
@@ -18,6 +19,7 @@ export class AppSchedule {
     }
     const json = await getSchedule()
     this.events = await this.getData(json)
+    this.beerList = await getBeerData()
     state.schedule = this.events
   }
 
@@ -103,12 +105,18 @@ export class AppSchedule {
           <div class="team text-lg">{event.hteam}</div>
           <div class="score text-lg">{event.hscore}</div>
         </div>
-        <div class="meta flex items-center justify-between mt-2 text-sm text-gray-600 font-light">
+        <div class="meta flex items-center justify-between mt-2 text-md text-zinc-800 font-light">
           <div class="location">{event.location}</div>
           <div class="timedate">
             {event.day_of_week} {event.date_formatted} {event.time_fomatted}
           </div>
         </div>
+        { 
+          (this.beerList && this.beerList[event.date_formatted]) 
+            && <div class="meta flex items-center justify-start mt-2 text-md text-zinc-900 font-light">
+              <span class="text-2xl">🍻</span> &nbsp; { ` provided by ${this.beerList[event.date_formatted]}` } 
+          </div>
+        }
       </div>
     </div>
   </div>)
