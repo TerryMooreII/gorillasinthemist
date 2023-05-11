@@ -1,14 +1,6 @@
 import state from '../stores/store.js'
 import { Env } from '@stencil/core';
 
-// Moose
-// export const teamid = "4112" 
-// export const leagueid = "2525"
-
-// Gorilla
-// export const teamid = "5059";
-// export const leagueid ="2502"
-
 export const teamid = Env.teamId;
 export const leagueid = Env.leagueId
 
@@ -32,7 +24,6 @@ export const getSchedule = async () => {
 };
 
 export const getBeerData = async () => {
-  console.log(Env.beerGoogleSheetURL)
   if (!Env.beerGoogleSheetURL) return null
   const beerList = {};
   try {
@@ -45,7 +36,6 @@ export const getBeerData = async () => {
       const td = row.querySelectorAll("td");
       beerList[td[1].textContent] = td[0].textContent;
     });
-    console.log(beerList)
     return beerList
   } catch(e) {
     console.error(e)

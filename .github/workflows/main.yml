@@ -7,6 +7,8 @@ env:
   TEAM_DESCRIPTION: ${{ vars.TEAM_DESCRIPTION }}
   LOGO_FILE: ${{ vars.LOGO_FILE }}
   BEER_RULES_MD_FILE: ${{ vars.BEER_RULES_MD_FILE }}
+  BASE_URL: ${{ vars.BASE_URL }}
+  BEER_GOOGLE_SHEET_URL: ${{ vars.BEER_GOOGLE_SHEET_URL }}
 
 on:
   push:
