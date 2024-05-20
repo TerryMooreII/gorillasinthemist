@@ -34,7 +34,7 @@ export class AppStandings {
 
   getTeams(json) {
     return json.included
-      .filter((item) => item.type === "team")
+      .filter((item) => item.type === "teams")
       .reduce(
         (acc, item) => {
           acc[item.id] = item.attributes.name;
@@ -49,7 +49,7 @@ export class AppStandings {
 
   getStatsTypes(json) {
     return json.included
-    .filter((s) => s.type === "stat")
+    .filter((s) => s.type === "stats")
     .reduce((acc, s) => {
       acc[s.id] = s.attributes.short_desc;
       return acc;
@@ -61,7 +61,7 @@ export class AppStandings {
 
     return json.included
     .filter((s) => {
-      return s.type === "stat-event";
+      return s.type === "stat-events";
     })
     .reduce((acc, se) => {
       const { value, team_id, stat_id } = se.attributes;
@@ -83,7 +83,7 @@ export class AppStandings {
   getData(json) {
     const teams = this.getTeams(json)
     return Object.values(json.included
-      .filter((data) => data.type === "event")
+      .filter((data) => data.type === "events")
       .reduce((acc, e) => {
         const { hscore, vscore, vteam_id, hteam_id } = e.attributes;
         if (vscore == null || hscore == null) return acc;

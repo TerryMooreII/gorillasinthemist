@@ -25,14 +25,14 @@ export class AppSchedule {
 
   async getData(json) {
     const facilities = json.included
-    .filter((item) => item.type === "resource")
+    .filter((item) => item.type === "resources")
     .reduce((acc, item) => {
       acc[item.id] = item.attributes.name;
       return acc;
     }, {});
 
   const teams = json.included
-    .filter((item) => item.type === "team")
+    .filter((item) => item.type === "teams")
     .reduce((acc, item) => {
       acc[item.id] = item.attributes.name;
       return acc;
@@ -43,7 +43,7 @@ export class AppSchedule {
 
   return json.included
     .filter(
-      (item) => item.type === "event" && item.attributes.event_type !== "L"
+      (item) => item.type === "events" && item.attributes.event_type !== "L"
     )
     .map((item) => {
       const e = item.attributes;
