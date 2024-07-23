@@ -39,6 +39,7 @@ export const getBeerData = async () => {
     return map
   })
   .catch(err => {
+    console.log(err)
     return null
   })
   
