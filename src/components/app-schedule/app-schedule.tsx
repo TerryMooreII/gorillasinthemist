@@ -112,9 +112,9 @@ export class AppSchedule {
           </div>
         </div>
         { 
-          (this.beerList && this.beerList[event.date_formatted]) 
+          (this.beerList && this.beerList.get(event.date_formatted)) 
             && <div class="meta flex items-center justify-start mt-2 text-md text-zinc-900 font-light">
-              <span class="text-2xl">🍻</span> &nbsp; { ` provided by ${this.beerList[event.date_formatted]}` } 
+              <span class="text-2xl">🍻</span> &nbsp; { ` provided by ${this.beerList.get(event.date_formatted)}` } 
           </div>
         }
       </div>

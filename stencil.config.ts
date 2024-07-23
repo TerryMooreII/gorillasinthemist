@@ -49,6 +49,6 @@ export const config: Config = {
     teamDescription: process.env.TEAM_DESCRIPTION,
     logo: process.env.LOGO_FILE,
     beerRules: process.env.BEER_RULES_MD_FILE,
-    beerGoogleSheetURL: process.env.BEER_GOOGLE_SHEET_URL
+    beerCsv: process.env.BEER_CSV
   }
 };

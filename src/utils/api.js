@@ -24,24 +24,25 @@ export const getSchedule = async () => {
 };
 
 export const getBeerData = async () => {
-  if (!Env.beerGoogleSheetURL) return null
-  const beerList = {};
-  try {
-    const response = await fetch(Env.beerGoogleSheetURL);
-    const sheet = await response.text()
-    const el = document.createElement("div");
-    el.innerHTML = sheet;
-
-    [...el.querySelectorAll("tr")].forEach((row) => {
-      const td = row.querySelectorAll("td");
-      beerList[td[1].textContent] = td[0].textContent;
-    });
-    return beerList
-  } catch(e) {
-    console.error(e)
-  } finally {
-    state.loading = false
-  }
+  if (!Env.beerCsv) return null
+  let csv
+  return import(Env.beerCsv)
+  .then(csv => {
+    const map = new Map()
+    csv.split('\n').forEach(row => {
+      const items = row.split(',')
+      const date = items[1].trim()
+      const name = items[0].trim()
+      if(!date) return
+      map.set(date, name)
+    })
+    return map
+  })
+  .catch(err => {
+    return null
+  })
+  
+ 
 }
 
 export const getStandings = async () => {

@@ -11,7 +11,7 @@ TEAM_NAME=
 TEAM_DESCRIPTION=
 LOGO_FILE=
 BEER_RULES_MD_FILE=
-BEER_GOOGLE_SHEET_URL= 
+BEER_CSV= 
 ```
 
 Make sure when you add new Env variables that they get added to the `.env` file, the `stencil.config.ts`, Github, and `.github/workflows/main.yml`.
