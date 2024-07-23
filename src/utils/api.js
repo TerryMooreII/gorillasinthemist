@@ -27,7 +27,6 @@ export const getBeerData = async () => {
   if (!Env.beerCsv) return null
   try {
     const { default: csv } = await import(`../${Env.beerCsv}`)
-    console.log(csv)
     const map = new Map()
     csv.split('\n').forEach(row => {
       const items = row.split(',')
@@ -37,10 +36,8 @@ export const getBeerData = async () => {
       if(!date) return
       map.set(date, name)
     })
-    console.log(Array.from(map))
     return map
   } catch(err) {
-    console.log(err)
     return null
   }
  
