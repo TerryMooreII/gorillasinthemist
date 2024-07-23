@@ -31,6 +31,7 @@ export const getBeerData = async () => {
     const map = new Map()
     csv.split('\n').forEach(row => {
       const items = row.split(',')
+      if (row.length < 2) return
       const date = items[1].trim()
       const name = items[0].trim()
       if(!date) return
