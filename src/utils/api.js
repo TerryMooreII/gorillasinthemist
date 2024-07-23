@@ -36,6 +36,7 @@ export const getBeerData = async () => {
       if(!date) return
       map.set(date, name)
     })
+    console.log(Array.from(map))
     return map
   })
   .catch(err => {
