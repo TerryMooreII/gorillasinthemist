@@ -26,7 +26,7 @@ export const getSchedule = async () => {
 export const getBeerData = async () => {
   if (!Env.beerCsv) return null
   let csv
-  return import(Env.beerCsv)
+  return import(`./${Env.beerCsv}`)
   .then(csv => {
     const map = new Map()
     csv.split('\n').forEach(row => {
