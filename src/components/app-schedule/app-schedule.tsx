@@ -43,14 +43,14 @@ export class AppSchedule {
 
   return json.included
     .filter(
-      (item) => item.type === "events" && item.attributes.event_type !== "L"
+      (item) => item.type === "events" && item.attributes.event_type_id !== "L"
     )
     .map((item) => {
       const e = item.attributes;
       return {
         location: facilities[e.resource_id],
-        hscore: e.hscore ?? 0,
-        vscore: e.vscore ?? 0,
+        hscore: e.home_score ?? 0,
+        vscore: e.visiting_score ?? 0,
         sub_type: e.sub_type,
         hteam_id: e.hteam_id,
         vteam_id: e.vteam_id,

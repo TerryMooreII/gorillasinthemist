@@ -14,6 +14,8 @@ export namespace Components {
     }
     interface AppRoot {
     }
+    interface AppRoster {
+    }
     interface AppRules {
     }
     interface AppSchedule {
@@ -40,6 +42,12 @@ declare global {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
+    interface HTMLAppRosterElement extends Components.AppRoster, HTMLStencilElement {
+    }
+    var HTMLAppRosterElement: {
+        prototype: HTMLAppRosterElement;
+        new (): HTMLAppRosterElement;
+    };
     interface HTMLAppRulesElement extends Components.AppRules, HTMLStencilElement {
     }
     var HTMLAppRulesElement: {
@@ -62,6 +70,7 @@ declare global {
         "app-home": HTMLAppHomeElement;
         "app-profile": HTMLAppProfileElement;
         "app-root": HTMLAppRootElement;
+        "app-roster": HTMLAppRosterElement;
         "app-rules": HTMLAppRulesElement;
         "app-schedule": HTMLAppScheduleElement;
         "app-standings": HTMLAppStandingsElement;
@@ -75,6 +84,8 @@ declare namespace LocalJSX {
     }
     interface AppRoot {
     }
+    interface AppRoster {
+    }
     interface AppRules {
     }
     interface AppSchedule {
@@ -85,6 +96,7 @@ declare namespace LocalJSX {
         "app-home": AppHome;
         "app-profile": AppProfile;
         "app-root": AppRoot;
+        "app-roster": AppRoster;
         "app-rules": AppRules;
         "app-schedule": AppSchedule;
         "app-standings": AppStandings;
@@ -97,6 +109,7 @@ declare module "@stencil/core" {
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "app-roster": LocalJSX.AppRoster & JSXBase.HTMLAttributes<HTMLAppRosterElement>;
             "app-rules": LocalJSX.AppRules & JSXBase.HTMLAttributes<HTMLAppRulesElement>;
             "app-schedule": LocalJSX.AppSchedule & JSXBase.HTMLAttributes<HTMLAppScheduleElement>;
             "app-standings": LocalJSX.AppStandings & JSXBase.HTMLAttributes<HTMLAppStandingsElement>;

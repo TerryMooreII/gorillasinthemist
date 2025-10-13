@@ -85,8 +85,8 @@ export class AppStandings {
     return Object.values(json.included
       .filter((data) => data.type === "events")
       .reduce((acc, e) => {
-        const { hscore, vscore, vteam_id, hteam_id } = e.attributes;
-        if (vscore == null || hscore == null) return acc;
+        const { home_score, visiting_score, vteam_id, hteam_id } = e.attributes;
+        if (visiting_score == null || home_score == null) return acc;
         if (!acc[hteam_id]) {
           acc[hteam_id] = {
             teamId: hteam_id,
@@ -110,10 +110,10 @@ export class AppStandings {
           };
         }
 
-        if (hscore === vscore) {
+        if (home_score === visiting_score) {
           acc[hteam_id].t = acc[hteam_id].t + 1;
           acc[vteam_id].t = acc[vteam_id].t + 1;
-        } else if (hscore > vscore) {
+        } else if (home_score > visiting_score) {
           acc[hteam_id].w = acc[hteam_id].w + 1;
           acc[vteam_id].l = acc[vteam_id].l + 1;
         } else {
@@ -121,10 +121,10 @@ export class AppStandings {
           acc[vteam_id].w = acc[vteam_id].w + 1;
         }
 
-        acc[hteam_id].gf = acc[hteam_id].gf + hscore
-        acc[hteam_id].ga = acc[hteam_id].ga + vscore
-        acc[vteam_id].gf = acc[vteam_id].gf + vscore
-        acc[vteam_id].ga = acc[vteam_id].ga + hscore
+        acc[hteam_id].gf = acc[hteam_id].gf + home_score
+        acc[hteam_id].ga = acc[hteam_id].ga + visiting_score
+        acc[vteam_id].gf = acc[vteam_id].gf + visiting_score
+        acc[vteam_id].ga = acc[vteam_id].ga + home_score
         return acc;
       }, {})).map(d => {
         return {

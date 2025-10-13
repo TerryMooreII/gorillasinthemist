@@ -12,6 +12,10 @@ export class AppRules {
   @State() html
 
   async componentWillLoad() {
+    if (!Env.beerRules) {
+      this.html = "No beer rules found"
+      return
+    }
     const response = await fetch(Env.beerRules)
     const file = await response.text()
     this.html = this.md.render(file)
