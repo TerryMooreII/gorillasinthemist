@@ -94,7 +94,7 @@ export class AppSchedule {
   }
 
   makeEventDom (event, i) {
-    return (<div class="flex-column border-b border-gray-400 lg:w-1/2 w-full" key={i}>
+    return (<div class="flex-column border-b border-solid border-gray-400 lg:w-1/2 w-full" key={i}>
     <div class={`flex w-full py-5`}>
       <div class="event flex flex-col w-full p-4">
         <div class={`away flex items-center justify-between ${event.vscore > event.hscore ? 'font-bold' : ''}`}>

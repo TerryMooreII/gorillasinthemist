@@ -169,14 +169,14 @@ export class AppStandings {
               {this.standings.map((t, i) => {
                 return (
                   <tr>
-                    <td class={`py-1 border-gray-300 border-b ${t.teamId === +teamid ? 'font-bold' : ''}`}>{i + 1}. {t.teamName}</td>
-                    <td class="text-center py-1 border-gray-300 border-b">{t.w}</td>
-                    <td class="text-center py-1 border-gray-300 border-b">{t.l}</td>
-                    <td class="text-center py-1 border-gray-300 border-b">{t.t}</td>
-                    <td class="text-center py-1 border-gray-300 border-b">{t.gf}</td>
-                    <td class="text-center py-1 border-gray-300 border-b">{t.ga}</td>
-                    <td class="text-center py-1 border-gray-300 border-b">{t.pd}</td>
-                    <td class="text-center py-1 border-gray-300 border-b">{t.pct.toFixed(2)}%</td>
+                    <td class={`py-1 border-solid border-gray-300 border-b ${t.teamId === +teamid ? 'font-bold' : ''}`}>{i + 1}. {t.teamName}</td>
+                    <td class="text-center py-1 border-solid border-gray-300 border-b">{t.w}</td>
+                    <td class="text-center py-1 border-solid border-gray-300 border-b">{t.l}</td>
+                    <td class="text-center py-1 border-solid border-gray-300 border-b">{t.t}</td>
+                    <td class="text-center py-1 border-solid border-gray-300 border-b">{t.gf}</td>
+                    <td class="text-center py-1 border-solid border-gray-300 border-b">{t.ga}</td>
+                    <td class="text-center py-1 border-solid border-gray-300 border-b">{t.pd}</td>
+                    <td class="text-center py-1 border-solid border-gray-300 border-b">{t.pct.toFixed(2)}%</td>
                   </tr>
                   )
               })}

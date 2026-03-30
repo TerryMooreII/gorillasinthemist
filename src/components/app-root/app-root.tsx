@@ -24,7 +24,7 @@ export class AppRoot {
         </div>
         <div class="mt-8">
           <div class="px-0 lg:px-36">
-            <div class="flex justify-center items-center w-full  border-t border-b  border-gray-400 mb-12">
+            <div class="flex justify-center items-center w-full  border-t border-b  border-solid border-solid border-gray-400 mb-12">
               <div class="flex items-center justify-center">
                 <stencil-route-link url="/schedule" class="w-32 py-2 text-lg text-center" activeClass="underline">
                   Schedule

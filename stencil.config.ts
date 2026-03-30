@@ -1,31 +1,14 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 import { Config } from '@stencil/core';
-import tailwind, { tailwindHMR, TailwindConfig } from 'stencil-tailwind-plugin';
-import cfg from './tailwind.config';
-
-const twConfigurationFn = (filename: string, config: TailwindConfig): TailwindConfig => {
-    return {
-      ...config,
-      ...cfg,
-      safelist: [
-        'bg-red-500',
-        'text-3xl',
-        'lg:text-4xl',
-        'lg:w-1/2'
-      ]
-    };
-};
-const opts = {
-  tailwindConf: twConfigurationFn
-};
+import tailwind, { tailwindHMR } from 'stencil-tailwind-plugin';
 // https://stenciljs.com/docs/config
 
 export const config: Config = {
   globalStyle: 'src/global/app.css',
   globalScript: 'src/global/app.ts',
   plugins: [
-    tailwind(opts),
+    tailwind({ tailwindCssPath: './src/tailwind.css' }),
     tailwindHMR(),
   ],
   taskQueue: 'async',
