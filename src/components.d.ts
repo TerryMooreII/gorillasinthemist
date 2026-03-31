@@ -10,12 +10,21 @@ export { MatchResults } from "@stencil-community/router";
 export namespace Components {
     interface AppHome {
     }
+    interface AppLogin {
+    }
     interface AppProfile {
         "match": MatchResults;
     }
     interface AppRoot {
     }
     interface AppRoster {
+    }
+    interface AppRsvp {
+        "currentStatus": string;
+        "customerId": string;
+        "eventId": string;
+        "rsvpId": string;
+        "teamId": string;
     }
     interface AppRules {
     }
@@ -24,12 +33,22 @@ export namespace Components {
     interface AppStandings {
     }
 }
+export interface AppRsvpCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAppRsvpElement;
+}
 declare global {
     interface HTMLAppHomeElement extends Components.AppHome, HTMLStencilElement {
     }
     var HTMLAppHomeElement: {
         prototype: HTMLAppHomeElement;
         new (): HTMLAppHomeElement;
+    };
+    interface HTMLAppLoginElement extends Components.AppLogin, HTMLStencilElement {
+    }
+    var HTMLAppLoginElement: {
+        prototype: HTMLAppLoginElement;
+        new (): HTMLAppLoginElement;
     };
     interface HTMLAppProfileElement extends Components.AppProfile, HTMLStencilElement {
     }
@@ -48,6 +67,12 @@ declare global {
     var HTMLAppRosterElement: {
         prototype: HTMLAppRosterElement;
         new (): HTMLAppRosterElement;
+    };
+    interface HTMLAppRsvpElement extends Components.AppRsvp, HTMLStencilElement {
+    }
+    var HTMLAppRsvpElement: {
+        prototype: HTMLAppRsvpElement;
+        new (): HTMLAppRsvpElement;
     };
     interface HTMLAppRulesElement extends Components.AppRules, HTMLStencilElement {
     }
@@ -69,9 +94,11 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "app-home": HTMLAppHomeElement;
+        "app-login": HTMLAppLoginElement;
         "app-profile": HTMLAppProfileElement;
         "app-root": HTMLAppRootElement;
         "app-roster": HTMLAppRosterElement;
+        "app-rsvp": HTMLAppRsvpElement;
         "app-rules": HTMLAppRulesElement;
         "app-schedule": HTMLAppScheduleElement;
         "app-standings": HTMLAppStandingsElement;
@@ -80,12 +107,22 @@ declare global {
 declare namespace LocalJSX {
     interface AppHome {
     }
+    interface AppLogin {
+    }
     interface AppProfile {
         "match"?: MatchResults;
     }
     interface AppRoot {
     }
     interface AppRoster {
+    }
+    interface AppRsvp {
+        "currentStatus"?: string;
+        "customerId"?: string;
+        "eventId"?: string;
+        "onRsvpChanged"?: (event: AppRsvpCustomEvent<any>) => void;
+        "rsvpId"?: string;
+        "teamId"?: string;
     }
     interface AppRules {
     }
@@ -95,9 +132,11 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "app-home": AppHome;
+        "app-login": AppLogin;
         "app-profile": AppProfile;
         "app-root": AppRoot;
         "app-roster": AppRoster;
+        "app-rsvp": AppRsvp;
         "app-rules": AppRules;
         "app-schedule": AppSchedule;
         "app-standings": AppStandings;
@@ -108,9 +147,11 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
+            "app-login": LocalJSX.AppLogin & JSXBase.HTMLAttributes<HTMLAppLoginElement>;
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "app-roster": LocalJSX.AppRoster & JSXBase.HTMLAttributes<HTMLAppRosterElement>;
+            "app-rsvp": LocalJSX.AppRsvp & JSXBase.HTMLAttributes<HTMLAppRsvpElement>;
             "app-rules": LocalJSX.AppRules & JSXBase.HTMLAttributes<HTMLAppRulesElement>;
             "app-schedule": LocalJSX.AppSchedule & JSXBase.HTMLAttributes<HTMLAppScheduleElement>;
             "app-standings": LocalJSX.AppStandings & JSXBase.HTMLAttributes<HTMLAppStandingsElement>;

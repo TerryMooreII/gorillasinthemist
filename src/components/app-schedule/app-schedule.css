@@ -1,0 +1,3 @@
+details[open] > summary .disclosure-arrow {
+  transform: rotate(90deg);
+}

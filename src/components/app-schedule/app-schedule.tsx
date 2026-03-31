@@ -1,4 +1,4 @@
-import { Component, State, h } from '@stencil/core';
+import { Component, Listen, State, h } from '@stencil/core';
 import { getDayOfWeek, formatDate, formatTime } from '../../utils/date-helpers.js'
 import { getSchedule, getBeerData, teamid } from '../../utils/api.js'
 import state from '../../stores/store.js'
@@ -12,24 +12,79 @@ export class AppSchedule {
   @State() events = []
   @State() beerList = null
 
-  async componentWillLoad() {
-    if (state.schedule) {
-      this.events = state.schedule
-      return 
-    }
-    const json = await getSchedule()
-    this.events = await this.getData(json)
-    this.beerList = await getBeerData()
-    state.schedule = this.events
+  @Listen('rsvpChanged')
+  handleRsvpChanged(event: CustomEvent) {
+    const { eventId, oldStatus, newStatus } = event.detail;
+    this.events = this.events.map((e: any) => {
+      if (e.id !== eventId) return e;
+      let count = e.rsvp_count;
+      if (newStatus === 'y' && oldStatus !== 'y') count++;
+      if (oldStatus === 'y' && newStatus !== 'y') count--;
+      return { ...e, rsvp_count: count };
+    });
   }
 
-  async getData(json) {
+  async componentWillLoad() {
+    if (state.schedule) {
+      this.events = state.schedule;
+      return;
+    }
+    await this.loadSchedule();
+  }
+
+  async loadSchedule() {
+    const json = await getSchedule()
+    this.events = this.getData(json)
+    this.beerList = await getBeerData()
+    state.schedule = this.events
+    
+  }
+
+  getRsvpData(json) {
+    /// Get the roster
+    const roster = json.included
+      .filter((item) => item.type === "customers")
+      .reduce((acc, item) => {
+        acc[item.id] = {
+          customerId: item.id,
+          firstName: item.attributes.first_name,
+          lastName: item.attributes.last_name,
+          email: item.attributes.email,
+          fullName: item.attributes.full_name,
+        }
+        return acc;
+      }, {});
+
+    const games = json.included
+      .filter((item) => item.type === "events" && item.attributes.event_type_id !== "L")
+      .reduce((acc, i) => {
+        acc[i.id] = { ...roster }
+        return acc;
+      }, {});
+    
+    const rsvpStates =  json.included
+      .filter((item) => item.type === "rsvp-states")
+
+    rsvpStates.forEach((item) => {
+      const gameId = item.attributes.event_id
+      const playerId = item.attributes.customer_id
+      games[gameId][playerId] = {
+        ...games[gameId][playerId],
+        status: item.attributes.status,
+        rsvpId: item.id,
+      }
+    })
+    return games
+  }
+
+  getData(json) {
+    const rsvpList = state.access_token ? this.getRsvpData(json) : {};
     const facilities = json.included
-    .filter((item) => item.type === "resources")
-    .reduce((acc, item) => {
-      acc[item.id] = item.attributes.name;
-      return acc;
-    }, {});
+      .filter((item) => item.type === "resources")
+      .reduce((acc, item) => {
+        acc[item.id] = item.attributes.name;
+        return acc;
+      }, {});
 
   const teams = json.included
     .filter((item) => item.type === "teams")
@@ -47,7 +102,10 @@ export class AppSchedule {
     )
     .map((item) => {
       const e = item.attributes;
+      const rsvps = rsvpList[item.id] ? Object.values(rsvpList[item.id]) : []
+
       return {
+        id: item.id,
         location: facilities[e.resource_id],
         hscore: e.home_score ?? 0,
         vscore: e.visiting_score ?? 0,
@@ -61,7 +119,17 @@ export class AppSchedule {
         start_time: e.event_start_time,
         date_formatted: formatDate(e.start_date),
         time_fomatted: formatTime(e.event_start_time),
-        day_of_week: getDayOfWeek(e.start_date)
+        day_of_week: getDayOfWeek(e.start_date),
+        rsvp_count: rsvps.filter((rsvp: any) => rsvp.status === 'y').length,
+        myRsvpStatus: this.getRsvpStatus(rsvps),
+        rsvps: rsvps.sort((a: any, b: any) => {
+          const score = (status: string) => {
+            if (status === 'y') return 0;
+            if (status === 'n') return 1;
+            return 2;
+          };
+          return score(a.status) - score(b.status);
+        })
       };
     })
     .sort((a, b) =>
@@ -93,9 +161,14 @@ export class AppSchedule {
     return nextEvent
   }
 
+  getRsvpStatus(rsvps) {
+    const myRsvp = rsvps?.find((rsvp) => rsvp.customerId === state.user.id);
+    return myRsvp ? { status: myRsvp.status, rsvpId: myRsvp.rsvpId } : null;
+  }
+
   makeEventDom (event, i) {
     return (<div class="flex-column border-b border-solid border-gray-400 lg:w-1/2 w-full" key={i}>
-    <div class={`flex w-full py-5`}>
+    <div class={`flex w-full flex-col py-5`}>
       <div class="event flex flex-col w-full p-4">
         <div class={`away flex items-center justify-between ${event.vscore > event.hscore ? 'font-bold' : ''}`}>
           <div class="team text-lg">{event.vteam}</div>
@@ -118,6 +191,42 @@ export class AppSchedule {
           </div>
         }
       </div>
+      { state.isLoggedIn && event.rsvps.length > 0 && (
+        <details class="rsvps px-4">
+          <summary class="cursor-pointer py-2 text-sm font-semibold text-gray-900 dark:text-gray-200 flex items-center justify-between list-none">
+            <div class="select-none flex items-center">
+              <span class="disclosure-arrow mr-1 inline-block transition-transform">&#9654;</span>
+              RSVPs
+              <small class="ml-2 px-2 py-1 rounded text-xs font-semibold bg-green-200 text-green-700">
+                {event.rsvp_count} attending
+              </small>
+            </div>
+            <div class="w-1/2">
+              <app-rsvp eventId={event.id} rsvpId={event.myRsvpStatus?.rsvpId} currentStatus={event.myRsvpStatus?.status} customerId={state.user?.id} teamId={teamid}></app-rsvp>
+            </div>
+          </summary>
+          <table class="w-full border-collapse border border-gray-400 text-sm dark:border-gray-500 dark:bg-gray-800">
+            <thead class="dark:bg-gray-700">
+              <tr>
+                <th class="w-1/2 border border-gray-300 p-4 text-left font-semibold text-gray-900 dark:border-gray-600 dark:text-gray-200">Name</th>
+                <th class="w-1/2 border border-gray-300 p-4 text-left font-semibold text-gray-900 dark:border-gray-600 dark:text-gray-200">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {event.rsvps.map((rsvp) => (
+                <tr>
+                  <td class="border border-gray-300 p-2 text-gray-500 dark:border-gray-700 dark:text-gray-400">{rsvp.fullName}</td>
+                  <td class="border border-gray-300 p-2 text-gray-500 dark:border-gray-700 dark:text-gray-400">
+                    <span class={`px-2 py-1 rounded text-xs font-semibold ${rsvp.status === 'y' ? 'bg-green-200 text-green-700' : ''} ${rsvp.status === 'n' ? 'bg-red-200 text-red-700' : ''}`}>
+                      {rsvp.status === 'y' ? 'Yes' : rsvp.status === 'n' ? 'No' : ''}
+                      </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </details>
+      )}
     </div>
   </div>)
   }
