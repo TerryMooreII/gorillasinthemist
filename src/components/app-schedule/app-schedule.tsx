@@ -211,8 +211,8 @@ export class AppSchedule {
           <table class="w-full border-collapse border border-gray-400 text-sm dark:border-gray-500 dark:bg-gray-800">
             <thead class="dark:bg-gray-700">
               <tr>
-                <th class="w-1/2 border border-gray-300 p-4 text-left font-semibold text-gray-900 dark:border-gray-600 dark:text-gray-200">Name</th>
-                <th class="w-1/2 border border-gray-300 p-4 text-left font-semibold text-gray-900 dark:border-gray-600 dark:text-gray-200">Status</th>
+                <th class="w-1/2 border border-gray-300 p-2 text-left font-semibold text-gray-900 dark:border-gray-600 dark:text-gray-200 bg-gray-100">Name</th>
+                <th class="w-1/2 border border-gray-300 p-2 text-left font-semibold text-gray-900 dark:border-gray-600 dark:text-gray-200 bg-gray-100">Status</th>
               </tr>
             </thead>
             <tbody>

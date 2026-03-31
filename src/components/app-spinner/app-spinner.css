@@ -1,0 +1,21 @@
+@keyframes zamboni {
+  0% {
+    transform: translateX(-100px) scaleX(1);
+  }
+  45% {
+    transform: translateX(100px) scaleX(1);
+  }
+  50% {
+    transform: translateX(100px) scaleX(-1);
+  }
+  95% {
+    transform: translateX(-100px) scaleX(-1);
+  }
+  100% {
+    transform: translateX(-100px) scaleX(1);
+  }
+}
+
+.zamboni {
+  animation: zamboni 3s ease-in-out infinite;
+}
