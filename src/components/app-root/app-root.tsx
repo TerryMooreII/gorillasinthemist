@@ -11,13 +11,11 @@ import { refreshToken } from '../../utils/api.js';
 export class AppRoot {
 
   async componentWillLoad() {
-    console.log('componentWillLoad');
     document.title = Env.teamName
     await this.doRefreshToken();
   }
 
   async doRefreshToken() {
-    console.log('doRefreshToken');
     const token  = await refreshToken();
     state.access_token = token;
     localStorage.setItem('access_token', token);
