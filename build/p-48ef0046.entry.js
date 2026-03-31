@@ -1,2 +1,0 @@
-import{r as t,g as r}from"./p-5221e87d.js";import{A as s}from"./p-bfe96b06.js";const i=(t,r)=>{if(t.charAt(0)=="/"&&r.charAt(r.length-1)=="/"){return r.slice(0,r.length-1)+t}return r+t};const o=class{constructor(r){t(this,r)}componentWillLoad(){if(this.history&&this.root&&this.url){return this.history.replace(i(this.url,this.root))}}get el(){return r(this)}};s.injectProps(o,["history","root"]);export{o as stencil_router_redirect};
-//# sourceMappingURL=p-48ef0046.entry.js.map
