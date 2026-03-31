@@ -75,6 +75,7 @@ export const login = async (email, password) => {
   try {
     const response = await fetch(`${DASH_API}/customer/auth/token?company=polarice`, {
       method: 'POST',
+      credentials: 'include',
       headers: { 
         accept: 'application/vnd.api+json', 
         'content-type': 'application/vnd.api+json',
@@ -113,6 +114,7 @@ export const refreshToken = async () => {
   try {
     const response = await fetch(`${DASH_API}/customer/auth/token?company=polarice`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         accept: 'application/vnd.api+json', 
         'content-type': 'application/vnd.api+json',
