@@ -10,13 +10,16 @@ import state from '../../stores/store.js'
 export class AppStandings {
 
   @State() standings
+  @State() loading = true
 
-  async componentWillLoad() {
+  async componentDidLoad() {
     if (state.standings) {
       this.standings = state.standings
+      this.loading = false
       return
     }
 
+    this.loading = true
     const json = await getStandings()
     const winLosses = this.getData(json)
     const stats = this.getStats(json)
@@ -30,6 +33,7 @@ export class AppStandings {
       }
     })
     state.standings = this.standings
+    this.loading = false
   }
 
   getTeams(json) {
@@ -142,12 +146,8 @@ export class AppStandings {
   }
 
   render() {
-    if (state.loading) {
-      return (
-        <div class="text-center">
-                Loading....
-              </div>
-      )
+    if (this.loading) {
+      return <app-spinner message="Loading standings..."></app-spinner>;
     }
     return (
       <div class="flex-col w-full flex items-center justify-center">

@@ -30,6 +30,9 @@ export namespace Components {
     }
     interface AppSchedule {
     }
+    interface AppSpinner {
+        "message": string;
+    }
     interface AppStandings {
     }
 }
@@ -86,6 +89,12 @@ declare global {
         prototype: HTMLAppScheduleElement;
         new (): HTMLAppScheduleElement;
     };
+    interface HTMLAppSpinnerElement extends Components.AppSpinner, HTMLStencilElement {
+    }
+    var HTMLAppSpinnerElement: {
+        prototype: HTMLAppSpinnerElement;
+        new (): HTMLAppSpinnerElement;
+    };
     interface HTMLAppStandingsElement extends Components.AppStandings, HTMLStencilElement {
     }
     var HTMLAppStandingsElement: {
@@ -101,6 +110,7 @@ declare global {
         "app-rsvp": HTMLAppRsvpElement;
         "app-rules": HTMLAppRulesElement;
         "app-schedule": HTMLAppScheduleElement;
+        "app-spinner": HTMLAppSpinnerElement;
         "app-standings": HTMLAppStandingsElement;
     }
 }
@@ -128,6 +138,9 @@ declare namespace LocalJSX {
     }
     interface AppSchedule {
     }
+    interface AppSpinner {
+        "message"?: string;
+    }
     interface AppStandings {
     }
     interface IntrinsicElements {
@@ -139,6 +152,7 @@ declare namespace LocalJSX {
         "app-rsvp": AppRsvp;
         "app-rules": AppRules;
         "app-schedule": AppSchedule;
+        "app-spinner": AppSpinner;
         "app-standings": AppStandings;
     }
 }
@@ -154,6 +168,7 @@ declare module "@stencil/core" {
             "app-rsvp": LocalJSX.AppRsvp & JSXBase.HTMLAttributes<HTMLAppRsvpElement>;
             "app-rules": LocalJSX.AppRules & JSXBase.HTMLAttributes<HTMLAppRulesElement>;
             "app-schedule": LocalJSX.AppSchedule & JSXBase.HTMLAttributes<HTMLAppScheduleElement>;
+            "app-spinner": LocalJSX.AppSpinner & JSXBase.HTMLAttributes<HTMLAppSpinnerElement>;
             "app-standings": LocalJSX.AppStandings & JSXBase.HTMLAttributes<HTMLAppStandingsElement>;
         }
     }

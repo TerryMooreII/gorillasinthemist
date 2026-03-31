@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, State, h } from '@stencil/core';
 import { Env } from '@stencil/core';
 import state from '../../stores/store.js';
 import { login, refreshToken } from '../../utils/api.js';
@@ -9,15 +9,21 @@ import { login, refreshToken } from '../../utils/api.js';
   shadow: true,
 })
 export class AppRoot {
+  @State() autoLoggingIn: boolean = !!localStorage.getItem('saved_credentials');
 
-  async componentWillLoad() {
+  async componentDidLoad() {
     document.title = Env.teamName
     await this.autoLogin();
   }
 
   async autoLogin() {
     const saved = localStorage.getItem('saved_credentials');
-    if (!saved) return;
+    if (!saved) {
+      this.autoLoggingIn = false;
+      return;
+    }
+
+    this.autoLoggingIn = true;
 
     try {
       const { username, password } = JSON.parse(atob(saved));
@@ -31,6 +37,8 @@ export class AppRoot {
     } catch (e) {
       console.error('Auto-login failed:', e);
       localStorage.removeItem('saved_credentials');
+    } finally {
+      this.autoLoggingIn = false;
     }
   }
 
@@ -47,6 +55,7 @@ export class AppRoot {
     localStorage.removeItem('user');
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('saved_credentials');
     window.location.hash = '/schedule';
   }
 
@@ -68,8 +77,8 @@ export class AppRoot {
                   Schedule
                 </stencil-route-link>
                 <stencil-route-link url="/standings" class=" py-2 text-lg text-center" activeClass="underline">
-                  Standings              
-                </stencil-route-link>      
+                  Standings
+                </stencil-route-link>
                 {
                 Env.teamName && <stencil-route-link url="/rules" class=" py-2 text-lg text-center" activeClass="underline">
                   Beer Rules
@@ -82,18 +91,21 @@ export class AppRoot {
               </div>
             </div>
 
-            <stencil-router historyType={'hash'}>
-              <stencil-route-switch scrollTopOffset={0}>
-                <stencil-route url="/" component="app-schedule" exact={true} />
-                <stencil-route url="/schedule" component="app-schedule"  exact={true} />
-                <stencil-route url="/standings" component="app-standings"  exact={true} />
-                <stencil-route url="/rules" component="app-rules"  exact={true} />
-                <stencil-route url="/login" component="app-login" exact={true} />
-                {
-                  Env.roster && <stencil-route url="/roster" component="app-roster"  exact={true} />
-                }
-              </stencil-route-switch>
-            </stencil-router>
+            {this.autoLoggingIn
+              ? <app-spinner message="Please wait while refreshing login..."></app-spinner>
+              : <stencil-router historyType={'hash'}>
+                  <stencil-route-switch scrollTopOffset={0}>
+                    <stencil-route url="/" component="app-schedule" exact={true} />
+                    <stencil-route url="/schedule" component="app-schedule"  exact={true} />
+                    <stencil-route url="/standings" component="app-standings"  exact={true} />
+                    <stencil-route url="/rules" component="app-rules"  exact={true} />
+                    <stencil-route url="/login" component="app-login" exact={true} />
+                    {
+                      Env.roster && <stencil-route url="/roster" component="app-roster"  exact={true} />
+                    }
+                  </stencil-route-switch>
+                </stencil-router>
+            }
             </div>
           </div>
         </div>

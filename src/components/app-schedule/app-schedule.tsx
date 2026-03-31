@@ -11,6 +11,7 @@ import state from '../../stores/store.js'
 export class AppSchedule {
   @State() events = []
   @State() beerList = null
+  @State() loading = true
 
   @Listen('rsvpChanged')
   handleRsvpChanged(event: CustomEvent) {
@@ -24,20 +25,22 @@ export class AppSchedule {
     });
   }
 
-  async componentWillLoad() {
+  async componentDidLoad() {
     if (state.schedule) {
       this.events = state.schedule;
+      this.loading = false;
       return;
     }
     await this.loadSchedule();
   }
 
   async loadSchedule() {
+    this.loading = true;
     const json = await getSchedule()
     this.events = this.getData(json)
     this.beerList = await getBeerData()
     state.schedule = this.events
-    
+    this.loading = false;
   }
 
   getRsvpData(json) {
@@ -244,12 +247,8 @@ export class AppSchedule {
   }
 
   render() {
-    if (state.loading) {
-      return (
-        <div class="text-center">
-                Loading....
-              </div>
-      )
+    if (this.loading) {
+      return <app-spinner message="Loading schedule..."></app-spinner>;
     }
     return (
       <div class="flex-col w-full flex items-center justify-center">
