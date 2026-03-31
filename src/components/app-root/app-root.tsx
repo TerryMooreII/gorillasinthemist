@@ -1,7 +1,7 @@
 import { Component, h } from '@stencil/core';
 import { Env } from '@stencil/core';
 import state from '../../stores/store.js';
-import { refreshToken } from '../../utils/api.js';
+import { login, refreshToken } from '../../utils/api.js';
 
 @Component({
   tag: 'app-root',
@@ -12,7 +12,26 @@ export class AppRoot {
 
   async componentWillLoad() {
     document.title = Env.teamName
-    await this.doRefreshToken();
+    await this.autoLogin();
+  }
+
+  async autoLogin() {
+    const saved = localStorage.getItem('saved_credentials');
+    if (!saved) return;
+
+    try {
+      const { username, password } = JSON.parse(atob(saved));
+      if (!username || !password) return;
+
+      const { user, access_token } = await login(username, password);
+      state.user = user;
+      state.access_token = access_token;
+      localStorage.setItem('access_token', access_token);
+      localStorage.setItem('user', JSON.stringify(user));
+    } catch (e) {
+      console.error('Auto-login failed:', e);
+      localStorage.removeItem('saved_credentials');
+    }
   }
 
   async doRefreshToken() {
@@ -57,8 +76,8 @@ export class AppRoot {
                 </stencil-route-link>
                 }
                 {state.user
-                  ? <button onClick={() => this.logout()} class="w-32 py-2 text-lg text-center">Logout</button>
-                  : <stencil-route-link url="/login" class="w-32 py-2 text-lg text-center" activeClass="underline">Login</stencil-route-link>
+                  ? <button onClick={() => this.logout()} class="px-4 py-1 text-sm text-white bg-gray-800 hover:bg-gray-700 rounded">Logout</button>
+                  : <stencil-route-link url="/login" class="px-4 py-1 text-sm text-white bg-gray-800 hover:bg-gray-700 rounded">Login</stencil-route-link>
                 }
               </div>
             </div>
