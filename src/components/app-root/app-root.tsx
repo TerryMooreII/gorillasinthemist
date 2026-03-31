@@ -63,15 +63,15 @@ export class AppRoot {
         <div class="mt-8">
           <div class="px-0 lg:px-36">
             <div class="flex justify-center items-center w-full  border-t border-b  border-solid border-solid border-gray-400 mb-12">
-              <div class="flex items-center justify-center">
-                <stencil-route-link url="/schedule" class="w-32 py-2 text-lg text-center" activeClass="underline">
+              <div class="flex items-center justify-around w-full lg:w-1/2">
+                <stencil-route-link url="/schedule" class=" py-2 text-lg text-center" activeClass="underline">
                   Schedule
                 </stencil-route-link>
-                <stencil-route-link url="/standings" class="w-32 py-2 text-lg text-center" activeClass="underline">
+                <stencil-route-link url="/standings" class=" py-2 text-lg text-center" activeClass="underline">
                   Standings              
                 </stencil-route-link>      
                 {
-                Env.teamName && <stencil-route-link url="/rules" class="w-32 py-2 text-lg text-center" activeClass="underline">
+                Env.teamName && <stencil-route-link url="/rules" class=" py-2 text-lg text-center" activeClass="underline">
                   Beer Rules
                 </stencil-route-link>
                 }
