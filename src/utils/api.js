@@ -109,7 +109,7 @@ export const login = async (email, password) => {
 }
 
 export const refreshToken = async () => {
-  if (!state.isLoggedIn || !state.user.id) return null
+  if (!state.isLoggedIn || !state?.user?.id) return null
   try {
     const response = await fetch(`${DASH_API}/customer/auth/token?company=polarice`, {
       method: 'POST',
