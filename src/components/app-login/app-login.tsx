@@ -8,8 +8,8 @@ import { login } from '../../utils/api.js';
   shadow: true,
 })
 export class AppLogin {
-  @State() username: string = 'terry@mooreii.com';
-  @State() password: string = 'bmp*cdh@mez2wav-ZJU';
+  @State() username: string = '';
+  @State() password: string = '';
   @State() error: string = '';
 
   handleUsernameInput(event) {
