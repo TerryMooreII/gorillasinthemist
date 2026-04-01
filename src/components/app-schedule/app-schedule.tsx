@@ -240,6 +240,22 @@ export class AppSchedule {
     return this.makeEventDom(nextEvent, 0)
   }
 
+  getUpcomingEvents(events) {
+    const now = new Date();
+    return events.filter((event) => {
+      const dt = [event.start_date.split('T')[0], event.start_time].join('T');
+      return new Date(dt) >= now;
+    });
+  }
+
+  getCompletedEvents(events) {
+    const now = new Date();
+    return events.filter((event) => {
+      const dt = [event.start_date.split('T')[0], event.start_time].join('T');
+      return new Date(dt) < now;
+    }).reverse();
+  }
+
   getScheduleDom(events) {
     return events.map((event, i) => (
       this.makeEventDom(event, i)
@@ -250,12 +266,14 @@ export class AppSchedule {
     if (this.loading) {
       return <app-spinner message="Loading schedule..."></app-spinner>;
     }
+    const upcoming = this.getUpcomingEvents(this.events);
+    const completed = this.getCompletedEvents(this.events);
     return (
       <div class="flex-col w-full flex items-center justify-center">
-        <h4 class="text-2xl text-center w-full"> Next Game </h4>
-        {this.getNextEventDom(this.events) || 'n/a'}
-        <h4 class="text-2xl text-center w-full my-3 mt-8"> Schedule </h4>
-        {this.getScheduleDom(this.events)}
+        <h4 class="text-2xl text-center w-full"> Upcoming Games </h4>
+        {upcoming.length > 0 ? this.getScheduleDom(upcoming) : <div class="text-center text-gray-500 py-4">No upcoming games</div>}
+        <h4 class="text-2xl text-center w-full my-3 mt-8"> Completed Games </h4>
+        {completed.length > 0 ? this.getScheduleDom(completed) : <div class="text-center text-gray-500 py-4">No completed games</div>}
       </div>
     );
   }
