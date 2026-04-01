@@ -86,7 +86,7 @@ export class AppLogin {
             <svg class="h-5 w-5 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
             </svg>
-            <p>Login with your Daysmart ReCreation / Polar Ice House account.</p>
+            <p>Login with your Daysmart Polar Ice House account.</p>
           </div>
           {this.error && <p class="text-red-500 mb-4">{this.error}</p>}
           <form onSubmit={(e) => this.handleSubmit(e)} class="flex flex-col gap-4 w-full max-w-sm ">
