@@ -196,7 +196,7 @@ export class AppSchedule {
       </div>
       { state.isLoggedIn && event.rsvps.length > 0 && (
         <details class="rsvps px-4">
-          <summary class="cursor-pointer py-2 text-sm font-semibold text-gray-900 dark:text-gray-200 flex items-center justify-between list-none">
+          <summary class="cursor-pointer py-2 text-sm font-semibold text-gray-900 flex items-center justify-between list-none">
             <div class="select-none flex items-center">
               <span class="disclosure-arrow mr-1 inline-block transition-transform">&#9654;</span>
               RSVPs
@@ -208,18 +208,18 @@ export class AppSchedule {
               <app-rsvp eventId={event.id} rsvpId={event.myRsvpStatus?.rsvpId} currentStatus={event.myRsvpStatus?.status} customerId={state.user?.id} teamId={teamid}></app-rsvp>
             </div>
           </summary>
-          <table class="w-full border-collapse border border-gray-400 text-sm dark:border-gray-500 dark:bg-gray-800">
-            <thead class="dark:bg-gray-700">
+          <table class="w-full border-collapse border border-gray-400 text-sm">
+            <thead>
               <tr>
-                <th class="w-1/2 border border-gray-300 p-2 text-left font-semibold text-gray-900 dark:border-gray-600 dark:text-gray-200 bg-gray-100">Name</th>
-                <th class="w-1/2 border border-gray-300 p-2 text-left font-semibold text-gray-900 dark:border-gray-600 dark:text-gray-200 bg-gray-100">Status</th>
+                <th class="w-1/2 border border-gray-300 p-2 text-left font-semibold text-gray-900 bg-gray-100">Name</th>
+                <th class="w-1/2 border border-gray-300 p-2 text-left font-semibold text-gray-900 bg-gray-100">Status</th>
               </tr>
             </thead>
             <tbody>
               {event.rsvps.map((rsvp) => (
                 <tr>
-                  <td class="border border-gray-300 p-2 text-gray-500 dark:border-gray-700 dark:text-gray-400">{rsvp.fullName}</td>
-                  <td class="border border-gray-300 p-2 text-gray-500 dark:border-gray-700 dark:text-gray-400">
+                  <td class="border border-gray-300 p-2 text-gray-500">{rsvp.fullName}</td>
+                  <td class="border border-gray-300 p-2 text-gray-500">
                     <span class={`px-2 py-1 rounded text-xs font-semibold ${rsvp.status === 'y' ? 'bg-green-200 text-green-700' : ''} ${rsvp.status === 'n' ? 'bg-red-200 text-red-700' : ''}`}>
                       {rsvp.status === 'y' ? 'Yes' : rsvp.status === 'n' ? 'No' : ''}
                       </span>

@@ -49,17 +49,17 @@ export class AppRsvp {
   render() {
     return (
       <div class="flex items-center gap-0 w-full">
-        <span class="text-sm font-semibold text-gray-900 dark:text-gray-200 mr-2">Attending:</span>
+        <span class="text-sm font-semibold text-gray-900 mr-2">Attending:</span>
         <button
           class={`px-2 py-1 text-sm font-semibold border border-gray-300 rounded-l w-1/2
-            ${this.status === 'y' ? 'bg-green-200 text-green-700' : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600'}`}
+            ${this.status === 'y' ? 'bg-green-200 text-green-700' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
           onClick={() => this.handleRsvp('y')}
         >
           Yes
         </button>
         <button
           class={`px-2 py-1 text-sm font-semibold border border-gray-300 border-l-0 rounded-r w-1/2
-            ${this.status === 'n' ? 'bg-red-200 text-red-700' : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600'}`}
+            ${this.status === 'n' ? 'bg-red-200 text-red-700' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
           onClick={() => this.handleRsvp('n')}
         >
           No
