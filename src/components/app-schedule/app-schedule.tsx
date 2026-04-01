@@ -242,16 +242,16 @@ export class AppSchedule {
 
   getUpcomingEvents(events) {
     const today = new Date();
-    today.setHours(23, 59, 59, 0);
+    today.setDate(today.getDate() - 1);
     return events.filter((event) => {
       const eventDate = new Date(event.start_date.split('T')[0]);
+      eventDate.setHours(23, 59, 59, 999);
       return eventDate >= today;
     });
   }
 
   getCompletedEvents(events) {
     const today = new Date();
-    today.setHours(23, 59, 59, 0);
     return events.filter((event) => {
       const eventDate = new Date(event.start_date.split('T')[0]);
       return eventDate < today;
