@@ -11,6 +11,7 @@ export class AppLogin {
   @State() username: string = '';
   @State() password: string = '';
   @State() error: string = '';
+  @State() loading: boolean = false;
   @State() rememberMe: boolean = false;
 
   connectedCallback() {
@@ -45,12 +46,13 @@ export class AppLogin {
       return;
     }
 
+    this.loading = true;
     try {
       const {user, access_token} = await login(this.username, this.password);
 
       state.user = user;
       state.access_token = access_token;
-    
+
       localStorage.setItem('access_token', access_token);
       localStorage.setItem('user', JSON.stringify(user));
 
@@ -63,8 +65,10 @@ export class AppLogin {
 
       window.location.hash = '/schedule';
     } catch(e) {
-      console.error(e)
-    } 
+      this.error = e.message;
+    } finally {
+      this.loading = false;
+    }
   }
 
   render() {
@@ -104,25 +108,34 @@ export class AppLogin {
               onInput={(e) => this.handlePasswordInput(e)}
               class="border border-gray-400 rounded px-3 py-2 text-lg bg-white"
             />
-            <label class="flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={this.rememberMe}
-                onChange={() => this.rememberMe = !this.rememberMe}
-                class="w-4 h-4"
-              />
-              Remember me on this device
-            </label>
-            {this.rememberMe && (
-              <p class="text-yellow-600 text-xs bg-yellow-50 border border-yellow-300 border-solid rounded px-2 py-1">
-                Warning: Your username and password will be stored in plain text on this device. Only use this on a trusted personal device.
-              </p>
-            )}
+            <div class="flex flex-col my-4">
+              <label class="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={this.rememberMe}
+                  onChange={() => this.rememberMe = !this.rememberMe}
+                  class="w-4 h-4"
+                />
+                Remember me on this device
+              </label>
+              {this.rememberMe && (
+                <p class="text-yellow-600 text-xs bg-yellow-50 border border-yellow-300 border-solid rounded px-2 py-1 mt-2">
+                  Warning: Your username and password will be stored in plain text on this device. Only use this on a trusted personal device.
+                </p>
+              )}
+            </div>
             <button
               type="submit"
-              class="bg-gray-800 text-white rounded px-4 py-2 text-lg hover:bg-gray-700"
+              disabled={this.loading}
+              class={`bg-gray-800 text-white rounded px-4 py-2 text-lg hover:bg-gray-700 flex items-center justify-center gap-2 ${this.loading ? 'opacity-75 cursor-not-allowed' : ''}`}
             >
-              Login
+              {this.loading && (
+                <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+              )}
+              {this.loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
         </div>

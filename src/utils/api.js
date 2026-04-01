@@ -93,6 +93,9 @@ export const login = async (email, password) => {
       })
     })
     if (!response.ok) {
+      if (response.status === 400) {
+        throw new Error('Invalid username or password')
+      }
       throw new Error('Failed to login')
     }
 
@@ -105,7 +108,7 @@ export const login = async (email, password) => {
 
     return json
   } catch(e) {
-    console.error(e)
+    throw e
   }
 }
 
