@@ -242,7 +242,7 @@ export class AppSchedule {
 
   getUpcomingEvents(events) {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    today.setHours(23, 59, 59, 0);
     return events.filter((event) => {
       const eventDate = new Date(event.start_date.split('T')[0]);
       return eventDate >= today;
@@ -251,7 +251,7 @@ export class AppSchedule {
 
   getCompletedEvents(events) {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    today.setHours(23, 59, 59, 0);
     return events.filter((event) => {
       const eventDate = new Date(event.start_date.split('T')[0]);
       return eventDate < today;
