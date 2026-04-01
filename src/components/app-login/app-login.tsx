@@ -81,9 +81,8 @@ export class AppLogin {
 
     return (
       <div class="flex flex-col items-center justify-center w-full">
-        <div class="flex flex-col items-center justify-center md:border lg:border-solid lg:border-gray-300 rounded py-8 lg:w-1/2"> 
-          <h3 class="text-2xl mb-3">Login</h3>
-          <div class="flex items-center gap-2 text-sm text-blue-700 bg-blue-50 border border-blue-200 rounded px-3 py-2 mb-4 w-full max-w-sm">
+        <div class="flex flex-col items-center justify-center"> 
+          <div class="flex items-center gap-2 text-sm text-blue-700 bg-blue-50 border border-blue-200 border-solid rounded px-3 py-2 mb-4 w-full max-w-sm">
             <svg class="h-5 w-5 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
             </svg>
@@ -115,7 +114,7 @@ export class AppLogin {
               Remember me on this device
             </label>
             {this.rememberMe && (
-              <p class="text-yellow-600 text-xs bg-yellow-50 border border-yellow-300 rounded px-2 py-1">
+              <p class="text-yellow-600 text-xs bg-yellow-50 border border-yellow-300 border-solid rounded px-2 py-1">
                 Warning: Your username and password will be stored in plain text on this device. Only use this on a trusted personal device.
               </p>
             )}
