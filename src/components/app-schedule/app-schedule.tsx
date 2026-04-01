@@ -241,18 +241,20 @@ export class AppSchedule {
   }
 
   getUpcomingEvents(events) {
-    const now = new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     return events.filter((event) => {
-      const dt = [event.start_date.split('T')[0], event.start_time].join('T');
-      return new Date(dt) >= now;
+      const eventDate = new Date(event.start_date.split('T')[0]);
+      return eventDate >= today;
     });
   }
 
   getCompletedEvents(events) {
-    const now = new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     return events.filter((event) => {
-      const dt = [event.start_date.split('T')[0], event.start_time].join('T');
-      return new Date(dt) < now;
+      const eventDate = new Date(event.start_date.split('T')[0]);
+      return eventDate < today;
     }).reverse();
   }
 
