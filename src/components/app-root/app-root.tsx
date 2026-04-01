@@ -86,7 +86,7 @@ export class AppRoot {
                 }
                 {state.user
                   ? <button onClick={() => this.logout()} class="px-4 py-1 text-sm text-white bg-gray-800 hover:bg-gray-700 rounded">Logout</button>
-                  : <stencil-route-link url="/login" class="px-4 py-1 text-sm text-white bg-gray-800 hover:bg-gray-700 rounded">Login</stencil-route-link>
+                  : <stencil-route-link url="/login" anchorClass="px-4 py-1 text-sm text-white bg-gray-800 hover:bg-gray-700 rounded inline-block no-underline">Login</stencil-route-link>
                 }
               </div>
             </div>
