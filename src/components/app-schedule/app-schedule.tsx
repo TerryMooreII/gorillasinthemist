@@ -198,9 +198,10 @@ export class AppSchedule {
         <details class="rsvps px-4">
           <summary class="cursor-pointer py-2 text-sm font-semibold text-gray-900 flex items-center justify-between list-none">
             <div class="select-none flex items-center">
-              <span class="disclosure-arrow mr-1 inline-block transition-transform">&#9654;</span>
-              RSVPs
-              <small class="ml-2 px-2 py-1 rounded text-xs font-semibold bg-green-200 text-green-700">
+              <svg class="disclosure-arrow mr-1 inline-block transition-transform" width="14" height="14" viewBox="0 0 20 20" fill="none">
+                <path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <small class="px-2 py-1 rounded text-xs font-semibold bg-green-200 text-green-700">
                 {event.rsvp_count} attending
               </small>
             </div>
