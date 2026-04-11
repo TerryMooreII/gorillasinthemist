@@ -11,9 +11,43 @@ import { login, refreshToken } from '../../utils/api.js';
 export class AppRoot {
   @State() autoLoggingIn: boolean = !!localStorage.getItem('saved_credentials');
 
+  private handleVisibilityChange = () => {
+    if (document.visibilityState === 'visible') {
+      this.checkTokenExpiration();
+    }
+  };
+
+  connectedCallback() {
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+  }
+
   async componentDidLoad() {
     document.title = Env.teamName
     await this.autoLogin();
+  }
+
+  private async checkTokenExpiration() {
+    if (!state.isLoggedIn || !state.access_token) return;
+
+    try {
+      const payload = JSON.parse(atob(state.access_token.split('.')[1]));
+      const remainingMs = payload.exp * 1000 - Date.now();
+
+      if (remainingMs < 3_600_000) {
+        const saved = localStorage.getItem('saved_credentials');
+        if (saved) {
+          await this.autoLogin();
+        } else {
+          this.logout();
+        }
+      }
+    } catch (e) {
+      console.error('Failed to check token expiration:', e);
+    }
   }
 
   async autoLogin() {
