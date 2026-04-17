@@ -81,6 +81,8 @@ export class AppSchedule {
   }
 
   getData(json) {
+    const teamId = json.data.id;
+
     const rsvpList = state.access_token ? this.getRsvpData(json) : {};
     const facilities = json.included
       .filter((item) => item.type === "resources")
@@ -89,55 +91,56 @@ export class AppSchedule {
         return acc;
       }, {});
 
-  const teams = json.included
-    .filter((item) => item.type === "teams")
-    .reduce((acc, item) => {
-      acc[item.id] = item.attributes.name;
-      return acc;
-    }, {
-      // Add moose knucks
-      [json.data.id]: json.data.attributes.name
-    });
+    const teams = json.included
+      .filter((item) => item.type === "teams")
+      .reduce((acc, item) => {
+        acc[item.id] = item.attributes.name;
+        return acc;
+      }, {
+        // Add moose knucks
+        [json.data.id]: json.data.attributes.name
+      });
 
-  return json.included
-    .filter(
-      (item) => item.type === "events" && item.attributes.event_type_id !== "L"
-    )
-    .map((item) => {
-      const e = item.attributes;
-      const rsvps = rsvpList[item.id] ? Object.values(rsvpList[item.id]) : []
+    return json.included
+      .filter(
+        (item) => item.type === "events" && item.attributes.event_type_id !== "L" 
+        && (item.attributes.hteam_id === +teamId || item.attributes.vteam_id === +teamId)
+      )
+      .map((item) => {
+        const e = item.attributes;
+        const rsvps = rsvpList[item.id] ? Object.values(rsvpList[item.id]) : []
 
-      return {
-        id: item.id,
-        location: facilities[e.resource_id],
-        hscore: e.home_score ?? 0,
-        vscore: e.visiting_score ?? 0,
-        sub_type: e.sub_type,
-        hteam_id: e.hteam_id,
-        vteam_id: e.vteam_id,
-        hteam: teams[e.hteam_id] ?? "Home Team",
-        vteam: teams[e.vteam_id] ?? "Away Team",
-        desc: e.desc,
-        start_date: e.start_date,
-        start_time: e.event_start_time,
-        date_formatted: formatDate(e.start_date),
-        time_fomatted: formatTime(e.event_start_time),
-        day_of_week: getDayOfWeek(e.start_date),
-        rsvp_count: rsvps.filter((rsvp: any) => rsvp.status === 'y').length,
-        myRsvpStatus: this.getRsvpStatus(rsvps),
-        rsvps: rsvps.sort((a: any, b: any) => {
-          const score = (status: string) => {
-            if (status === 'y') return 0;
-            if (status === 'n') return 1;
-            return 2;
-          };
-          return score(a.status) - score(b.status);
-        })
-      };
-    })
-    .sort((a, b) =>
-      a.start_date > b.start_date ? 1 : a.start_date < b.start_date ? -1 : 0
-    );
+        return {
+          id: item.id,
+          location: facilities[e.resource_id],
+          hscore: e.home_score ?? 0,
+          vscore: e.visiting_score ?? 0,
+          sub_type: e.sub_type,
+          hteam_id: e.hteam_id,
+          vteam_id: e.vteam_id,
+          hteam: teams[e.hteam_id] ?? "Home Team",
+          vteam: teams[e.vteam_id] ?? "Away Team",
+          desc: e.desc,
+          start_date: e.start_date,
+          start_time: e.event_start_time,
+          date_formatted: formatDate(e.start_date),
+          time_fomatted: formatTime(e.event_start_time),
+          day_of_week: getDayOfWeek(e.start_date),
+          rsvp_count: rsvps.filter((rsvp: any) => rsvp.status === 'y').length,
+          myRsvpStatus: this.getRsvpStatus(rsvps),
+          rsvps: rsvps.sort((a: any, b: any) => {
+            const score = (status: string) => {
+              if (status === 'y') return 0;
+              if (status === 'n') return 1;
+              return 2;
+            };
+            return score(a.status) - score(b.status);
+          })
+        };
+      })
+      .sort((a, b) =>
+        a.start_date > b.start_date ? 1 : a.start_date < b.start_date ? -1 : 0
+      );
   }
 
 
