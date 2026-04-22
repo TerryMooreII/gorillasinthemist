@@ -109,6 +109,7 @@ export class AppSchedule {
       .map((item) => {
         const e = item.attributes;
         const rsvps = rsvpList[item.id] ? Object.values(rsvpList[item.id]) : []
+        console.log(rsvps);
 
         return {
           id: item.id,
@@ -258,7 +259,9 @@ export class AppSchedule {
     const today = new Date();
     return events.filter((event) => {
       const eventDate = new Date(event.start_date.split('T')[0]);
-      return eventDate < today;
+      eventDate.setDate(eventDate.getDate() + 1);
+      eventDate.setHours(23, 59, 59, 999);
+      return eventDate.getTime() < today.getTime();
     }).reverse();
   }
 
