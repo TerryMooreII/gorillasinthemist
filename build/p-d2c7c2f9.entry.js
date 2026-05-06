@@ -1,0 +1,2 @@
+import{r as t,g as s}from"./p-46e77a8a.js";import{A as e}from"./p-b0f3b649.js";const i=class{constructor(s){t(this,s);this.titleSuffix="";this.pageTitle=""}updateDocumentTitle(){const t=this.el;if(t.ownerDocument){t.ownerDocument.title=`${this.pageTitle}${this.titleSuffix||""}`}}componentWillLoad(){this.updateDocumentTitle()}get el(){return s(this)}static get watchers(){return{pageTitle:["updateDocumentTitle"]}}};e.injectProps(i,["titleSuffix"]);export{i as stencil_route_title};
+//# sourceMappingURL=p-d2c7c2f9.entry.js.map
