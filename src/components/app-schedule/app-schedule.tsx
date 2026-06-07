@@ -15,13 +15,31 @@ export class AppSchedule {
 
   @Listen('rsvpChanged')
   handleRsvpChanged(event: CustomEvent) {
-    const { eventId, oldStatus, newStatus } = event.detail;
+    const { eventId, customerId, oldStatus, newStatus, rsvpId } = event.detail;
     this.events = this.events.map((e: any) => {
       if (e.id !== eventId) return e;
+
       let count = e.rsvp_count;
       if (newStatus === 'y' && oldStatus !== 'y') count++;
       if (oldStatus === 'y' && newStatus !== 'y') count--;
-      return { ...e, rsvp_count: count };
+
+      const rsvps = e.rsvps
+        .map((r: any) =>
+          r.customerId === customerId
+            ? { ...r, status: newStatus, rsvpId: rsvpId ?? r.rsvpId }
+            : r
+        )
+        .sort((a: any, b: any) => {
+          const score = (status: string) => (status === 'y' ? 0 : status === 'n' ? 1 : 2);
+          return score(a.status) - score(b.status);
+        });
+
+      const myRsvpStatus =
+        customerId === state.user?.id
+          ? { status: newStatus, rsvpId: rsvpId ?? e.myRsvpStatus?.rsvpId }
+          : e.myRsvpStatus;
+
+      return { ...e, rsvp_count: count, rsvps, myRsvpStatus };
     });
   }
 

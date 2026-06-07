@@ -39,7 +39,13 @@ export class AppRsvp {
           this.rsvpId = result.data.id;
         }
       }
-      this.rsvpChanged.emit({ eventId: this.eventId, oldStatus: previous, newStatus });
+      this.rsvpChanged.emit({
+        eventId: this.eventId,
+        customerId: this.customerId,
+        oldStatus: previous,
+        newStatus,
+        rsvpId: this.rsvpId,
+      });
     } catch (e) {
       console.error('RSVP failed:', e);
       this.status = previous;
